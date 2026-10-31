@@ -1,6 +1,6 @@
 package com.celiocastro.native32tv
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.KeyEvent
@@ -16,7 +16,7 @@ import com.swordfish.libretrodroid.GLRetroViewData
 import com.swordfish.libretrodroid.ShaderConfig
 import java.io.File
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
     private val pickGame = 101
     private var retroView: GLRetroView? = null
     private lateinit var root: FrameLayout
