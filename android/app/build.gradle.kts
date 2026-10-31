@@ -11,8 +11,8 @@ android {
         applicationId = "com.celiocastro.native32tv"
         minSdk = 23
         targetSdk = 28
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.3.0"
 
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
@@ -33,4 +33,8 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+}
+
+dependencies {
+    implementation("com.github.BluetileEntertainment:LibretroDroid:583c580193c0bcdff686874d478d5b679f100131")
 }
