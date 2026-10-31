@@ -3,22 +3,58 @@ on:
   workflow_dispatch:
   push:
     branches: [ android-tvbox-apk ]
-    paths: [ "android/**", ".github/workflows/android-apk.yml" ]
+    paths:
+      - "android/**"
+      - "crates/native32emu-core/**"
+      - "crates/native32emu-libretro/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - ".github/workflows/android-apk.yml"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
-      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Set up Android SDK and NDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android NDK
+        run: sdkmanager "ndk;27.2.12479018"
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi
+
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk --locked
+
+      - name: Build Native32 libretro core for TV boxes
+        env:
+          ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.2.12479018
+        run: |
+          cargo ndk -t arm64-v8a -t armeabi-v7a -p 21 build -p native32emu-libretro --release
+          mkdir -p android/app/src/main/jniLibs/arm64-v8a
+          mkdir -p android/app/src/main/jniLibs/armeabi-v7a
+          cp target/aarch64-linux-android/release/libnative32emu.so android/app/src/main/jniLibs/arm64-v8a/native32emu_libretro_android.so
+          cp target/armv7-linux-androideabi/release/libnative32emu.so android/app/src/main/jniLibs/armeabi-v7a/native32emu_libretro_android.so
+
+      - name: Build Android APK
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
-      - name: Build debug APK
+
+      - name: Assemble APK
         run: gradle -p android assembleDebug
+
       - uses: actions/upload-artifact@v4
         with:
           name: Native32TV-debug-apk
