@@ -104,7 +104,11 @@ class MainActivity : AppCompatActivity() {
                 preferLowLatencyAudio = true
             }
             root.removeAllViews()
-            val view = GLRetroView(this, viewData)
+            val view = GLRetroView(this, viewData).apply {
+                // Keep the GL surface at the full TV screen size instead of fitting
+                // the core aspect ratio into a smaller centered rectangle.
+                setResizeMode(GLRetroView.RESIZE_MODE_FILL)
+            }
             retroView = view
             root.addView(view, FrameLayout.LayoutParams(-1, -1))
             lifecycle.addObserver(view)
