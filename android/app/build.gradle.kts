@@ -11,15 +11,15 @@ android {
         applicationId = "com.celiocastro.native32tv"
         minSdk = 23
         targetSdk = 28
-        versionCode = 3
-        versionName = "0.3.0"
+        versionCode = 4
+        versionName = "0.4.0"
 
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
         }
     }
 
-    sourceSets {
+    packaging {\n        jniLibs {\n            useLegacyPackaging = true\n        }\n    }\n\n    sourceSets {
         getByName("main") {
             jniLibs.srcDirs("src/main/jniLibs")
         }
