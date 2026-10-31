@@ -43,8 +43,10 @@ jobs:
       - name: Build Native32 libretro core for TV boxes
         env:
           ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.2.12479018
+          ANDROID_NDK_ROOT: ${{ env.ANDROID_HOME }}/ndk/27.2.12479018
+          ANDROID_PLATFORM: 21
         run: |
-          cargo ndk -t arm64-v8a -t armeabi-v7a -p 21 build -p native32emu-libretro --release
+          cargo ndk -t arm64-v8a -t armeabi-v7a build -p native32emu-libretro --release
           mkdir -p android/app/src/main/jniLibs/arm64-v8a
           mkdir -p android/app/src/main/jniLibs/armeabi-v7a
           cp target/aarch64-linux-android/release/libnative32emu.so android/app/src/main/jniLibs/arm64-v8a/native32emu_libretro_android.so
