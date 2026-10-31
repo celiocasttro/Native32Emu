@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 gameFile.outputStream().use { output -> input.copyTo(output) }
             } ?: throw IllegalStateException("Não foi possível ler o arquivo.")
 
-            val coreName = "native32emu_libretro_android.so"
+            val coreName = "libnative32emu_libretro_android.so"
             val coreFile = File(applicationInfo.nativeLibraryDir, coreName)
             if (!coreFile.exists()) throw IllegalStateException("Core Native32 não encontrado no APK para esta arquitetura.")
 
