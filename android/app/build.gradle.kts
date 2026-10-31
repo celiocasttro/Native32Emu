@@ -19,7 +19,13 @@ android {
         }
     }
 
-    packaging {\n        jniLibs {\n            useLegacyPackaging = true\n        }\n    }\n\n    sourceSets {
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
+    sourceSets {
         getByName("main") {
             jniLibs.srcDirs("src/main/jniLibs")
         }
