@@ -36,5 +36,6 @@ android {
 }
 
 dependencies {
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.github.BluetileEntertainment:LibretroDroid:583c580193c0bcdff686874d478d5b679f100131")
 }
