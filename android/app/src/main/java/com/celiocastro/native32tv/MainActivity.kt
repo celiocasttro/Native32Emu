@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             val view = GLRetroView(this, viewData).apply {
                 // Keep the GL surface at the full TV screen size instead of fitting
                 // the core aspect ratio into a smaller centered rectangle.
-                setResizeMode(GLRetroView.RESIZE_MODE_FILL)
+                setResizeMode(3)
             }
             retroView = view
             root.addView(view, FrameLayout.LayoutParams(-1, -1))
